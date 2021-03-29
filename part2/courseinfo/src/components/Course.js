@@ -14,7 +14,7 @@ const Content = props => (
 
 const Footer = props => {
     const totalExercises = props.parts.map(part => part.exercises).reduce((a, b) => a + b)
-    return <p>Number of exercises {totalExercises}</p>
+    return <b>total of {totalExercises} exercises</b>
 }
 
 const Course = props => (
