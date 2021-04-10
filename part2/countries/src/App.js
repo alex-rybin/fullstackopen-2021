@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import Country from './Country'
 import axios from "axios";
+import CountryListItem from "./CountryListItem";
 
 const App = () => {
     const [filteredCountries, setFilteredCountries] = useState([])
@@ -23,8 +24,9 @@ const App = () => {
 
             {filteredCountries.length > 10 ? 'Too many matches, specify another filter'
                 : filteredCountries.length === 1 ? <Country country={filteredCountries[0]}/>
-                    : filteredCountries.map(country => <div
-                        key={country.name}>{country.name}</div>)}
+                    : filteredCountries.map(
+                        country => <CountryListItem key={country.name} country={country}/>
+                    )}
         </>
     )
 }
