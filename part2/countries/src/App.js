@@ -1,7 +1,8 @@
 import React, {useEffect, useState} from 'react'
+import axios from 'axios'
+
 import Country from './Country'
-import axios from "axios";
-import CountryListItem from "./CountryListItem";
+import CountryListItem from './CountryListItem'
 
 const App = () => {
     const [filteredCountries, setFilteredCountries] = useState([])
