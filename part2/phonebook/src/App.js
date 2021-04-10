@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from 'react'
 import Filter from './Filter'
-import AddPersonForm from "./AddPersonForm";
-import PersonsList from "./PersonsList";
-import axios from "axios";
+import AddPersonForm from './AddPersonForm'
+import PersonsList from './PersonsList'
+import axios from 'axios'
 
 const App = () => {
     const [persons, setPersons] = useState([])
