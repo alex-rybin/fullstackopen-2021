@@ -19,8 +19,19 @@ const App = () => {
     const addNewName = event => {
         event.preventDefault()
 
-        if (persons.map(person => person.name).includes(newName)) {
-            alert(`${newName} is already added to phonebook`)
+        const currentContact = persons.find(person => person.name === newName)
+
+        if (currentContact) {
+            if (window.confirm(`${newName} is already added to phonebook, replace the old number with a new one?`)) {
+                contactsService.update(currentContact.id, {
+                    name: newName,
+                    number: newNumber
+                }).then((response) => {
+                    setPersons(persons.filter(person => person.id !== currentContact.id).concat(response))
+                    setNewName('')
+                    setNewNumber('')
+                })
+            }
         } else {
             contactsService.create({
                 name: newName,

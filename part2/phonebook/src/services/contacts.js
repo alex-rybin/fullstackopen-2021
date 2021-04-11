@@ -14,10 +14,15 @@ const deleteContact = contactId => {
     return axios.delete(`${baseUrl}${contactId}/`).then(response => response.data)
 }
 
+const update = (contactId, newData) => {
+    return axios.put(`${baseUrl}${contactId}/`, newData).then(response => response.data)
+}
+
 const service = {
     getAll,
     create,
     deleteContact,
+    update,
 }
 
 export default service
