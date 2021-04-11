@@ -10,9 +10,14 @@ const create = newContact => {
     return axios.post(baseUrl, newContact).then(response => response.data)
 }
 
+const deleteContact = contactId => {
+    return axios.delete(`${baseUrl}${contactId}/`).then(response => response.data)
+}
+
 const service = {
     getAll,
     create,
+    deleteContact,
 }
 
 export default service

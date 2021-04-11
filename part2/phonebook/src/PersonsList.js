@@ -1,11 +1,13 @@
 import React from 'react'
+import PersonItem from './PersonItem'
 
-const PersonsList = ({persons, filter}) => (
+const PersonsList = ({persons, filter, onDeleteClick}) => (
     <>
         {persons.filter(
             (person) => person.name.toLowerCase().includes(filter.toLowerCase())
         ).map(
-            person => <div key={person.name}>{person.name} {person.number}</div>
+            person => <PersonItem name={person.name} number={person.number}
+                                  onDeleteClick={() => onDeleteClick(person.id)}/>
         )}
     </>
 )

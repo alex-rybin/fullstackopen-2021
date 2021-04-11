@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 
-import Country from './Country'
+import CountryData from './CountryData'
 
 const CountryListItem = ({country}) => {
     const [showCountry, setShowCountry] = useState(false)
@@ -10,7 +10,7 @@ const CountryListItem = ({country}) => {
             {country.name}
             <button onClick={() => setShowCountry(!showCountry)}>show</button>
             <br/>
-            {showCountry && <><Country country={country}/><br/></>}
+            {showCountry && <><CountryData country={country}/><br/></>}
         </>
     )
 }

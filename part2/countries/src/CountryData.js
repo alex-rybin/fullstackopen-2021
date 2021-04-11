@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import axios from 'axios'
 
-const Country = ({country}) => {
+const CountryData = ({country}) => {
     const [forecast, setForecast] = useState(null)
 
     useEffect(() => {
@@ -33,4 +33,4 @@ const Country = ({country}) => {
     )
 }
 
-export default Country
+export default CountryData

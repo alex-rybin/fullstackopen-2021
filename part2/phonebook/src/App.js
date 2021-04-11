@@ -33,6 +33,14 @@ const App = () => {
         }
     }
 
+    const deleteContact = contactId => {
+        const contactName = persons.find(person => person.id === contactId).name
+        if (window.confirm(`Delete ${contactName}?`)) {
+            contactsService.deleteContact(contactId)
+                .then(setPersons(persons.filter(person => person.id !== contactId)))
+        }
+    }
+
     return (
         <div>
             <h2>Phonebook</h2>
@@ -43,7 +51,7 @@ const App = () => {
                            onNumberChange={setNewNumber}
                            onSubmit={addNewName}/>
             <h2>Numbers</h2>
-            <PersonsList filter={filter} persons={persons}/>
+            <PersonsList filter={filter} persons={persons} onDeleteClick={deleteContact}/>
         </div>
     )
 }
