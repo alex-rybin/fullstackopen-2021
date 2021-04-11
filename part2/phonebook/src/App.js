@@ -11,12 +11,19 @@ const App = () => {
     const [newNumber, setNewNumber] = useState('')
     const [filter, setFilter] = useState('')
     const [notification, setNotification] = useState(null)
+    const [notificationType, setNotificationType] = useState('success')
 
     useEffect(() => {
         contactsService.getAll().then(response => {
             setPersons(response)
         })
     }, [])
+
+    const showNotification = (message, type) => {
+        setNotificationType(type)
+        setNotification(message)
+        setTimeout(() => setNotification(null), 5000)
+    }
 
     const addNewName = event => {
         event.preventDefault()
@@ -30,10 +37,9 @@ const App = () => {
                     number: newNumber
                 }).then((response) => {
                     setPersons(persons.filter(person => person.id !== currentContact.id).concat(response))
-                    setNotification(`Updated phone number for ${newName}`)
+                    showNotification(`Updated phone number for ${newName}`, 'success')
                     setNewName('')
                     setNewNumber('')
-                    setTimeout(() => setNotification(null), 5000)
                 })
             }
         } else {
@@ -42,10 +48,9 @@ const App = () => {
                 number: newNumber
             }).then((response) => {
                 setPersons(persons.concat(response))
-                setNotification(`Added ${newName}`)
+                showNotification(`Added ${newName}`, 'success')
                 setNewName('')
                 setNewNumber('')
-                setTimeout(() => setNotification(null), 5000)
             })
         }
     }
@@ -54,14 +59,20 @@ const App = () => {
         const contactName = persons.find(person => person.id === contactId).name
         if (window.confirm(`Delete ${contactName}?`)) {
             contactsService.deleteContact(contactId)
-                .then(setPersons(persons.filter(person => person.id !== contactId)))
+                .then(() => {
+                    setPersons(persons.filter(person => person.id !== contactId))
+                    showNotification(`Deleted ${contactName}`, 'success')
+                })
+                .catch(() => {
+                    showNotification(`Information of ${contactName} has already been removed from server`, 'error')
+                })
         }
     }
 
     return (
         <div>
             <h2>Phonebook</h2>
-            <Notification message={notification}/>
+            <Notification message={notification} type={notificationType}/>
             <Filter value={filter} onChange={setFilter}/>
             <h2>Add new</h2>
             <AddPersonForm name={newName} number={newNumber}

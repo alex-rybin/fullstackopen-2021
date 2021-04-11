@@ -1,7 +1,7 @@
 import React from 'react'
 
-const Notification = ({message}) => (
-    message && <div className="success">
+const Notification = ({message, type}) => (
+    message && <div className={type}>
         {message}
     </div>
 )
