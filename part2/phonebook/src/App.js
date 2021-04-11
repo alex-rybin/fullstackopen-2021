@@ -3,12 +3,14 @@ import Filter from './Filter'
 import AddPersonForm from './AddPersonForm'
 import PersonsList from './PersonsList'
 import contactsService from './services/contacts'
+import Notification from "./Notification";
 
 const App = () => {
     const [persons, setPersons] = useState([])
     const [newName, setNewName] = useState('')
     const [newNumber, setNewNumber] = useState('')
     const [filter, setFilter] = useState('')
+    const [notification, setNotification] = useState(null)
 
     useEffect(() => {
         contactsService.getAll().then(response => {
@@ -28,8 +30,10 @@ const App = () => {
                     number: newNumber
                 }).then((response) => {
                     setPersons(persons.filter(person => person.id !== currentContact.id).concat(response))
+                    setNotification(`Updated phone number for ${newName}`)
                     setNewName('')
                     setNewNumber('')
+                    setTimeout(() => setNotification(null), 5000)
                 })
             }
         } else {
@@ -38,8 +42,10 @@ const App = () => {
                 number: newNumber
             }).then((response) => {
                 setPersons(persons.concat(response))
+                setNotification(`Added ${newName}`)
                 setNewName('')
                 setNewNumber('')
+                setTimeout(() => setNotification(null), 5000)
             })
         }
     }
@@ -55,6 +61,7 @@ const App = () => {
     return (
         <div>
             <h2>Phonebook</h2>
+            <Notification message={notification}/>
             <Filter value={filter} onChange={setFilter}/>
             <h2>Add new</h2>
             <AddPersonForm name={newName} number={newNumber}
