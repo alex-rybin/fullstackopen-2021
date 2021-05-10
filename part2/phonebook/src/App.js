@@ -35,22 +35,26 @@ const App = () => {
                 contactsService.update(currentContact.id, {
                     name: newName,
                     number: newNumber
-                }).then((response) => {
+                }).then(response => {
                     setPersons(persons.filter(person => person.id !== currentContact.id).concat(response))
                     showNotification(`Updated phone number for ${newName}`, 'success')
                     setNewName('')
                     setNewNumber('')
+                }).catch(error => {
+                    showNotification(error.response.data.error, 'error')
                 })
             }
         } else {
             contactsService.create({
                 name: newName,
                 number: newNumber
-            }).then((response) => {
+            }).then(response => {
                 setPersons(persons.concat(response))
                 showNotification(`Added ${newName}`, 'success')
                 setNewName('')
                 setNewNumber('')
+            }).catch(error => {
+                showNotification(error.response.data.error, 'error')
             })
         }
     }
